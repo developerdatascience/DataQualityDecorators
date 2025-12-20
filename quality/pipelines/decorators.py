@@ -1,9 +1,9 @@
 from functools import wraps
-from dqp.registry import EXPECTATION_REGISTRY, VIEW_REGISTRY
-from dqp.expectations import evaluate_duplicate_rows, evaluate_expectation, evaluate_primary_key, evaluate_sql_expectation, evaluate_column_range
-from dqp.utils.utils import persist_bad_records
-from dqp.database.session import SessionLocal, init_db
-from dqp.database.models import DataQualityMetric
+from quality.pipelines.registry import EXPECTATION_REGISTRY, VIEW_REGISTRY
+from quality.pipelines.expectations import evaluate_duplicate_rows, evaluate_expectation, evaluate_primary_key, evaluate_sql_expectation, evaluate_column_range
+from quality.pipelines.utils.utils import persist_bad_records
+from quality.pipelines.database.session import SessionLocal, init_db
+from quality.pipelines.database.models import DataQualityMetric
 
 def expect(name: str, rule: str, severity: str = "ERROR"):
     """

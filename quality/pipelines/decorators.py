@@ -4,8 +4,20 @@ from quality.pipelines.expectations import evaluate_duplicate_rows, evaluate_exp
 from quality.pipelines.utils.utils import persist_bad_records
 from quality.pipelines.database.session import SessionLocal, init_db
 from quality.pipelines.database.models import DataQualityMetric
+from enum import Enum
 
-def expect(name: str, rule: str, severity: str = "ERROR"):
+class SchemaRuleType(str, Enum):
+    EXISTS = "exists"
+    TYPE = "type"
+    NOT_NULL = "not_null"
+    UNIQUE = "unique"
+
+class Severity(str, Enum):
+    ERROR = "ERROR"
+    WARNING = "WARNING"
+
+
+def expect(name: str, rule: str, severity: Severity = Severity.ERROR):
     """
     Usage:
     @dp.expect("valid_artist_name", "artist_name IS NOT NULL")
@@ -22,7 +34,7 @@ def expect(name: str, rule: str, severity: str = "ERROR"):
         return func
     return decorator
 
-def expect_primary_key(name, columns: str, severity: str = "ERROR"):
+def expect_primary_key(name, columns: str, severity: Severity = Severity.ERROR):
     """
     Usage:
     @dp.expect_primary_key("id")
@@ -39,7 +51,7 @@ def expect_primary_key(name, columns: str, severity: str = "ERROR"):
         return func
     return decorator
 
-def expect_no_duplicates(name, columns: list = None, severity: str = "ERROR"):
+def expect_no_duplicates(name, columns: list = None, severity: Severity = Severity.ERROR):
     """
     Usage:
     @dp.expect_no_duplicates("no_duplicates", ["id", "name"])
@@ -56,7 +68,7 @@ def expect_no_duplicates(name, columns: list = None, severity: str = "ERROR"):
         return func
     return decorator
 
-def expect_column_range(name, column, min_value=None, max_value=None, severity="ERROR"):
+def expect_column_range(name, column, min_value=None, max_value=None, severity: Severity = Severity.ERROR):
     def decorator(func):
         EXPECTATION_REGISTRY[func.__name__].append({
             "type": "range",

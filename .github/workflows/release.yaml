@@ -1,0 +1,37 @@
+name: Build Python SDK
+
+on:
+  push:
+    branches: [ dataqualitydecorators ]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.11"
+
+    - name: Install build tools
+      run: |
+        python -m pip install --upgrade pip
+        pip install build pytest
+
+    - name: Run tests
+      run: |
+        pytest tests/
+
+    - name: Build sdist and wheel
+      run: |
+        python -m build
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: dq-sdk-dist
+        path: dist/*

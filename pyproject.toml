@@ -10,3 +10,9 @@ dependencies = []
 big-data = [
     "pyspark>=4.1.0",
 ]
+database = [
+    "sqlalchemy>=2.0.45",
+]
+jupyter-notebook = [
+    "notebook>=7.5.1",
+]

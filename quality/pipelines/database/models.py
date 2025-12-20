@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, Float, DateTime
 from sqlalchemy.sql import func
-from dqp.database.base import Base
+from quality.pipelines.database.base import Base
 
 
 class DataQualityMetric(Base):

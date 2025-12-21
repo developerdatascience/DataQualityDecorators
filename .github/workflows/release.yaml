@@ -54,7 +54,7 @@ jobs:
           path: dist/*
 
   upload:
-    name: Publish artifacts (placeholder)
+    name: Publish artifacts
     runs-on: ubuntu-latest
     needs: build
     steps:

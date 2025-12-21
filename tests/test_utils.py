@@ -3,7 +3,7 @@ import importlib.util
 
 # Load the module directly from the file to avoid importing the package
 # (which pulls in pyspark during package import).
-utils_path = os.path.join(os.getcwd(), "quality", "pipelines", "utils", "utils.py")
+utils_path = os.path.join(os.getcwd(), "src", "quality", "pipelines", "utils", "utils.py")
 spec = importlib.util.spec_from_file_location("dq_utils", utils_path)
 dq_utils = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(dq_utils)
